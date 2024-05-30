@@ -11,28 +11,51 @@ namespace RotateImg
 {
     internal static class ImageRotator
     {
+        public static bool IsIndexedPixelFormat(this PixelFormat pixelFormat)
+            => (pixelFormat & PixelFormat.Indexed) == PixelFormat.Indexed;
+
+        public static int GetChannels(this PixelFormat pixelFormat)
+        {
+            switch (pixelFormat)
+            {
+                case PixelFormat.Format8bppIndexed:
+                    return 1;
+                case PixelFormat.Format24bppRgb:
+                    return 3;
+                case PixelFormat.Format32bppArgb:
+                    return 4;
+                default:
+                    throw new ArgumentException("Unsupported pixel format.");
+            }
+        }
+
         public static Bitmap RotateImage(Bitmap src, double rotationDegree)
         {
-            Size2D inputSize = new Size2D();
-            inputSize.width = src.Width;
-            inputSize.height = src.Height;
+            int channels = src.PixelFormat.GetChannels();
+
+            Size2D inputSize = new Size2D(src.Width, src.Height);
 
             Size2D outputSize = new Size2D();
             GetRotatedImageSize(ref inputSize, ref outputSize, rotationDegree);
 
-            Bitmap dst = new Bitmap(outputSize.width, outputSize.height, PixelFormat.Format32bppArgb);
+            Bitmap dst = new Bitmap(outputSize.width, outputSize.height, src.PixelFormat);
+
+            if (src.PixelFormat.IsIndexedPixelFormat())
+            {
+                dst.Palette = src.Palette;
+            }
 
             BitmapData srcData = src.LockBits(
                 new Rectangle(0, 0, src.Width, src.Height),
                 ImageLockMode.ReadOnly,
-                PixelFormat.Format32bppArgb);
+                src.PixelFormat);
 
             BitmapData dstData = dst.LockBits(
                 new Rectangle(0, 0, dst.Width, dst.Height),
                 ImageLockMode.ReadWrite,
-                PixelFormat.Format32bppArgb);
+                src.PixelFormat);
 
-            RotateImage(new BitmapImageData(srcData, 4), new BitmapImageData(dstData, 4), rotationDegree);
+            RotateImage(new BitmapImageData(srcData, channels), new BitmapImageData(dstData, channels), rotationDegree);
 
             src.UnlockBits(srcData);
             dst.UnlockBits(dstData);
@@ -51,6 +74,12 @@ namespace RotateImg
         {
             public int width;
             public int height;
+
+            public Size2D(int width, int height)
+            {
+                this.width = width;
+                this.height = height;
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]

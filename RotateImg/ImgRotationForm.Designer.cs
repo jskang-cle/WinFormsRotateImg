@@ -71,12 +71,14 @@
             // buttonRotate
             // 
             this.buttonRotate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonRotate.Enabled = false;
             this.buttonRotate.Location = new System.Drawing.Point(671, 34);
             this.buttonRotate.Name = "buttonRotate";
             this.buttonRotate.Size = new System.Drawing.Size(94, 25);
             this.buttonRotate.TabIndex = 5;
             this.buttonRotate.Text = "Rotate";
             this.buttonRotate.UseVisualStyleBackColor = true;
+            this.buttonRotate.Click += new System.EventHandler(this.buttonRotate_Click);
             // 
             // textBoxRotationDegree
             // 
@@ -87,6 +89,7 @@
             this.textBoxRotationDegree.Name = "textBoxRotationDegree";
             this.textBoxRotationDegree.Size = new System.Drawing.Size(548, 21);
             this.textBoxRotationDegree.TabIndex = 3;
+            this.textBoxRotationDegree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotationDegree_KeyDown);
             // 
             // label1
             // 
@@ -117,6 +120,7 @@
             this.textBoxImagePath.Location = new System.Drawing.Point(115, 5);
             this.textBoxImagePath.Margin = new System.Windows.Forms.Padding(5);
             this.textBoxImagePath.Name = "textBoxImagePath";
+            this.textBoxImagePath.ReadOnly = true;
             this.textBoxImagePath.Size = new System.Drawing.Size(548, 21);
             this.textBoxImagePath.TabIndex = 2;
             // 
@@ -129,6 +133,7 @@
             this.buttonBrowseImage.TabIndex = 4;
             this.buttonBrowseImage.Text = "Browse...";
             this.buttonBrowseImage.UseVisualStyleBackColor = true;
+            this.buttonBrowseImage.Click += new System.EventHandler(this.buttonBrowseImage_Click);
             // 
             // tableLayoutPanel2
             // 

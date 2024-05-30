@@ -33,7 +33,7 @@ void copyPixelBilinear(BitmapImageData& src, BitmapImageData& dst, double srcX, 
 
         if (x1 >= 0 && y1 >= 0)
             value += src.data[y1 * src.step + x1 * elemSize + i] * xWeight * yWeight;
-        if (x2 < src.rows && y1 >= 0)
+        if (x2 < src.cols && y1 >= 0)
             value += src.data[y1 * src.step + x2 * elemSize + i] * (1 - xWeight) * yWeight;
         if (x1 >= 0 && y2 < src.rows)
             value += src.data[y2 * src.step + x1 * elemSize + i] * xWeight * (1 - yWeight);

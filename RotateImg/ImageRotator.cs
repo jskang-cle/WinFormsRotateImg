@@ -20,19 +20,19 @@ namespace RotateImg
             Size2D outputSize = new Size2D();
             GetRotatedImageSize(ref inputSize, ref outputSize, rotationDegree);
 
-            Bitmap dst = new Bitmap(outputSize.width, outputSize.height, PixelFormat.Format24bppRgb);
+            Bitmap dst = new Bitmap(outputSize.width, outputSize.height, PixelFormat.Format32bppArgb);
 
             BitmapData srcData = src.LockBits(
                 new Rectangle(0, 0, src.Width, src.Height),
                 ImageLockMode.ReadOnly,
-                PixelFormat.Format24bppRgb);
+                PixelFormat.Format32bppArgb);
 
             BitmapData dstData = dst.LockBits(
                 new Rectangle(0, 0, dst.Width, dst.Height),
                 ImageLockMode.ReadWrite,
-                PixelFormat.Format24bppRgb);
+                PixelFormat.Format32bppArgb);
 
-            RotateImage(new BitmapImageData(srcData, 3), new BitmapImageData(dstData, 3), rotationDegree);
+            RotateImage(new BitmapImageData(srcData, 4), new BitmapImageData(dstData, 4), rotationDegree);
 
             src.UnlockBits(srcData);
             dst.UnlockBits(dstData);

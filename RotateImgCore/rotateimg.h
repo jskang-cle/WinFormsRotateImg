@@ -20,6 +20,7 @@ typedef struct BitmapImageData
     int cols;
     int rows;
     int channels;
+    int step;
 } BitmapImageData;
 
 DLLAPI void GetRotatedImageSize(Size2D* input, Size2D* output, double rotationDegree);

@@ -60,6 +60,7 @@ namespace RotateImg
             public int cols;
             public int rows;
             public int channels;
+            public int step;
 
             public BitmapImageData(BitmapData bmpData, int channels)
             {
@@ -67,6 +68,7 @@ namespace RotateImg
                 cols = bmpData.Width;
                 rows = bmpData.Height;
                 this.channels = channels;
+                step = bmpData.Stride;
             }
         }
     }

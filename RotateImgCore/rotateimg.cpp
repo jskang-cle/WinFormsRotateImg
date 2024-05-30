@@ -27,23 +27,20 @@ void copyPixelBilinear(BitmapImageData& src, BitmapImageData& dst, double srcX, 
 
     size_t elemSize = sizeof(uint8_t) * src.channels;
 
-    size_t srcStep = src.cols * elemSize;
-    size_t dstStep = dst.cols * elemSize;
-
     for (int i = 0; i < src.channels; ++i)
     {
         double value = 0;
 
         if (x1 >= 0 && y1 >= 0)
-            value += src.data[y1 * srcStep + x1 * elemSize + i] * xWeight * yWeight;
+            value += src.data[y1 * src.step + x1 * elemSize + i] * xWeight * yWeight;
         if (x2 < src.rows && y1 >= 0)
-            value += src.data[y1 * srcStep + x2 * elemSize + i] * (1 - xWeight) * yWeight;
+            value += src.data[y1 * src.step + x2 * elemSize + i] * (1 - xWeight) * yWeight;
         if (x1 >= 0 && y2 < src.rows)
-            value += src.data[y2 * srcStep + x1 * elemSize + i] * xWeight * (1 - yWeight);
+            value += src.data[y2 * src.step + x1 * elemSize + i] * xWeight * (1 - yWeight);
         if (x2 < src.cols && y2 < src.rows)
-            value += src.data[y2 * srcStep + x2 * elemSize + i] * (1 - xWeight) * (1 - yWeight);
+            value += src.data[y2 * src.step + x2 * elemSize + i] * (1 - xWeight) * (1 - yWeight);
 
-        dst.data[dstY * dstStep + dstX * elemSize + i] = (uint8_t)value;
+        dst.data[dstY * dst.step + dstX * elemSize + i] = (uint8_t)value;
     }
 }
 

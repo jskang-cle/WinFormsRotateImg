@@ -23,19 +23,32 @@ namespace RotateImg
         private void buttonBrowseImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png, *.bmp) | *.jpg; *.jpeg; *.png; *.bmp";
+            openFileDialog.Filter = "Image Files(*.BMP, *.JPG, *.JPEG, *.GIF, *.PNG)|*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG|All files (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
+            Bitmap newImage;
+            try
+            {
+                newImage = new Bitmap(openFileDialog.FileName);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Invalid image file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _originalImage = newImage;
+
+            pictureBoxOriginal.Image = newImage;
+
             textBoxImagePath.Text = openFileDialog.FileName;
-
-            _originalImage = new Bitmap(openFileDialog.FileName);
-            pictureBoxOriginal.Image = _originalImage;
-
             buttonRotate.Enabled = true;
+
+            toolStripStatusLabelImageInfo.Text = $"Image loaded: {newImage.Width}x{newImage.Height}, PixelFormat: {newImage.PixelFormat}";
         }
 
         private void RotateImage()
@@ -43,13 +56,13 @@ namespace RotateImg
             string rotationDegreeText = textBoxRotationDegree.Text;
             if (string.IsNullOrEmpty(rotationDegreeText))
             {
-                MessageBox.Show("Please enter rotation degree.");
+                MessageBox.Show("Please enter rotation degree.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
             if (!double.TryParse(rotationDegreeText, out double rotationDegree))
             {
-                MessageBox.Show("Invalid rotation degree.");
+                MessageBox.Show("Invalid rotation degree.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 

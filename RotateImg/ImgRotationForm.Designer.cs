@@ -40,10 +40,13 @@
             this.pictureBoxRotated = new System.Windows.Forms.PictureBox();
             this.pictureBoxOriginal = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelImageInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRotated)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -65,14 +68,14 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(768, 62);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(899, 62);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // buttonRotate
             // 
             this.buttonRotate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonRotate.Enabled = false;
-            this.buttonRotate.Location = new System.Drawing.Point(671, 34);
+            this.buttonRotate.Location = new System.Drawing.Point(802, 34);
             this.buttonRotate.Name = "buttonRotate";
             this.buttonRotate.Size = new System.Drawing.Size(94, 25);
             this.buttonRotate.TabIndex = 5;
@@ -87,7 +90,7 @@
             this.textBoxRotationDegree.Location = new System.Drawing.Point(115, 36);
             this.textBoxRotationDegree.Margin = new System.Windows.Forms.Padding(5);
             this.textBoxRotationDegree.Name = "textBoxRotationDegree";
-            this.textBoxRotationDegree.Size = new System.Drawing.Size(548, 21);
+            this.textBoxRotationDegree.Size = new System.Drawing.Size(679, 21);
             this.textBoxRotationDegree.TabIndex = 3;
             this.textBoxRotationDegree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotationDegree_KeyDown);
             // 
@@ -121,13 +124,13 @@
             this.textBoxImagePath.Margin = new System.Windows.Forms.Padding(5);
             this.textBoxImagePath.Name = "textBoxImagePath";
             this.textBoxImagePath.ReadOnly = true;
-            this.textBoxImagePath.Size = new System.Drawing.Size(548, 21);
+            this.textBoxImagePath.Size = new System.Drawing.Size(679, 21);
             this.textBoxImagePath.TabIndex = 2;
             // 
             // buttonBrowseImage
             // 
             this.buttonBrowseImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonBrowseImage.Location = new System.Drawing.Point(671, 3);
+            this.buttonBrowseImage.Location = new System.Drawing.Point(802, 3);
             this.buttonBrowseImage.Name = "buttonBrowseImage";
             this.buttonBrowseImage.Size = new System.Drawing.Size(94, 25);
             this.buttonBrowseImage.TabIndex = 4;
@@ -152,16 +155,16 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(768, 419);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(899, 487);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label3.Location = new System.Drawing.Point(387, 18);
+            this.label3.Location = new System.Drawing.Point(452, 18);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(378, 12);
+            this.label3.Size = new System.Drawing.Size(444, 12);
             this.label3.TabIndex = 3;
             this.label3.Text = "Rotated Image";
             this.label3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -170,9 +173,9 @@
             // 
             this.pictureBoxRotated.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxRotated.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxRotated.Location = new System.Drawing.Point(387, 33);
+            this.pictureBoxRotated.Location = new System.Drawing.Point(452, 33);
             this.pictureBoxRotated.Name = "pictureBoxRotated";
-            this.pictureBoxRotated.Size = new System.Drawing.Size(378, 383);
+            this.pictureBoxRotated.Size = new System.Drawing.Size(444, 451);
             this.pictureBoxRotated.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxRotated.TabIndex = 1;
             this.pictureBoxRotated.TabStop = false;
@@ -183,7 +186,7 @@
             this.pictureBoxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxOriginal.Location = new System.Drawing.Point(3, 33);
             this.pictureBoxOriginal.Name = "pictureBoxOriginal";
-            this.pictureBoxOriginal.Size = new System.Drawing.Size(378, 383);
+            this.pictureBoxOriginal.Size = new System.Drawing.Size(443, 451);
             this.pictureBoxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxOriginal.TabIndex = 0;
             this.pictureBoxOriginal.TabStop = false;
@@ -194,16 +197,32 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label2.Location = new System.Drawing.Point(3, 18);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(378, 12);
+            this.label2.Size = new System.Drawing.Size(443, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "Original Image";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelImageInfo});
+            this.statusStrip.Location = new System.Drawing.Point(0, 579);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(923, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelImageInfo
+            // 
+            this.toolStripStatusLabelImageInfo.Name = "toolStripStatusLabelImageInfo";
+            this.toolStripStatusLabelImageInfo.Size = new System.Drawing.Size(0, 17);
             // 
             // ImgRotationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 511);
+            this.ClientSize = new System.Drawing.Size(923, 601);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(800, 550);
@@ -215,7 +234,10 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRotated)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOriginal)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -233,5 +255,7 @@
         private System.Windows.Forms.PictureBox pictureBoxRotated;
         private System.Windows.Forms.PictureBox pictureBoxOriginal;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelImageInfo;
     }
 }

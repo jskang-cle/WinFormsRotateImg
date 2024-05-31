@@ -18,22 +18,65 @@ DLLAPI void GetRotatedImageSize(Size2D* input, Size2D* output, double rotationDe
     output->height = (int)(input->width * sinVal + input->height * cosVal);
 }
 
+static void copyPixelBilinear(cv::Mat& src, cv::Mat& dst, double srcX, double srcY, int dstX, int dstY)
+{
+    int x1 = (int)floor(srcX);
+    int y1 = (int)floor(srcY);
+    int x2 = x1 + 1;
+    int y2 = y1 + 1;
+
+    double xWeight = x2 - srcX;
+    double yWeight = y2 - srcY;
+
+    size_t elemSize = src.elemSize();
+
+    for (int i = 0; i < src.channels(); ++i)
+    {
+        double value = 0;
+
+        if (x1 >= 0 && y1 >= 0)
+            value += src.data[y1 * src.step + x1 * elemSize + i] * xWeight * yWeight;
+        if (x2 < src.cols && y1 >= 0)
+            value += src.data[y1 * src.step + x2 * elemSize + i] * (1 - xWeight) * yWeight;
+        if (x1 >= 0 && y2 < src.rows)
+            value += src.data[y2 * src.step + x1 * elemSize + i] * xWeight * (1 - yWeight);
+        if (x2 < src.cols && y2 < src.rows)
+            value += src.data[y2 * src.step + x2 * elemSize + i] * (1 - xWeight) * (1 - yWeight);
+
+        dst.data[dstY * dst.step + dstX * elemSize + i] = (uint8_t)value;
+    }
+}
+
 DLLAPI void RotateImage(BitmapImageData src, BitmapImageData dst, double rotationDegree)
 {
-    int matType = CV_MAKETYPE(cv::DataType<uint8_t>::type, src.channels);
+    int matType = CV_MAKETYPE(CV_8U, src.channels);
 
     cv::Mat srcMat(src.rows, src.cols, matType, src.data, src.step);
     cv::Mat dstMat(dst.rows, dst.cols, matType, dst.data, dst.step);
 
-    cv::Point2f center((src.cols - 1) * 0.5, (src.rows - 1) * 0.5);
-    cv::Mat rotMat = cv::getRotationMatrix2D(center, rotationDegree, 1.0);
+    double srcCenterX = (src.cols - 1) * 0.5;
+    double srcCenterY = (src.rows - 1) * 0.5;
 
-    rotMat.at<double>(0, 2) += (dst.cols - src.cols) * 0.5;
-    rotMat.at<double>(1, 2) += (dst.rows - src.rows) * 0.5;
+    double dstCenterX = (dst.cols - 1) * 0.5;
+    double dstCenterY = (dst.rows - 1) * 0.5;
 
-    cv::warpAffine(
-        srcMat, dstMat, rotMat, 
-        cv::Size(dst.cols, dst.rows));
+    double rad = -rotationDegree * CV_PI / 180;
+    double sinVal = sin(rad);
+    double cosVal = cos(rad);
+
+    for (int dstY = 0; dstY < dst.rows; ++dstY)
+    {
+        for (int dstX = 0; dstX < dst.cols; ++dstX)
+        {
+            double srcX = (dstX - dstCenterX) * cosVal - (dstY - dstCenterY) * sinVal + srcCenterX;
+            double srcY = (dstX - dstCenterX) * sinVal + (dstY - dstCenterY) * cosVal + srcCenterY;
+
+            if (srcX > -1 && srcX < src.cols && srcY > -1 && srcY < src.rows)
+            {
+                copyPixelBilinear(srcMat, dstMat, srcX, srcY, dstX, dstY);
+            }
+        }
+    }
 
     return;
 }

@@ -25,13 +25,17 @@ namespace RotateImg
                 case PixelFormat.Format32bppArgb:
                     return 4;
                 default:
-                    throw new ArgumentException("Unsupported pixel format.");
+                    return -1;
             }
         }
 
         public static Bitmap RotateImage(Bitmap src, double rotationDegree)
         {
             int channels = src.PixelFormat.GetChannels();
+            if (channels == -1)
+            {
+                throw new NotSupportedException("Unsupported pixel format.");
+            }
 
             Size2D inputSize = new Size2D(src.Width, src.Height);
 

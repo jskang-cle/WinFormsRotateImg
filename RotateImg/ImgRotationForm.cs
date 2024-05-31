@@ -30,10 +30,9 @@ namespace RotateImg
                 return;
             }
 
-            Bitmap newImage;
             try
             {
-                newImage = new Bitmap(openFileDialog.FileName);
+                _originalImage = new Bitmap(openFileDialog.FileName);
             }
             catch (ArgumentException)
             {
@@ -41,14 +40,12 @@ namespace RotateImg
                 return;
             }
 
-            _originalImage = newImage;
-
-            pictureBoxOriginal.Image = newImage;
+            pictureBoxOriginal.Image = _originalImage;
 
             textBoxImagePath.Text = openFileDialog.FileName;
             buttonRotate.Enabled = true;
 
-            toolStripStatusLabelImageInfo.Text = $"Image loaded: {newImage.Width}x{newImage.Height}, PixelFormat: {newImage.PixelFormat}";
+            toolStripStatusLabelImageInfo.Text = $"Image loaded: {_originalImage.Width}x{_originalImage.Height}, PixelFormat: {_originalImage.PixelFormat}";
         }
 
         private void RotateImage()

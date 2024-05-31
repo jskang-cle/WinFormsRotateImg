@@ -22,13 +22,10 @@ DLLAPI void RotateImage(BitmapImageData src, BitmapImageData dst, double rotatio
 {
     int matType = CV_MAKETYPE(cv::DataType<uint8_t>::type, src.channels);
 
-    cv::Mat srcMat(src.rows, src.cols, matType, src.data);
-    srcMat.step = src.step;
+    cv::Mat srcMat(src.rows, src.cols, matType, src.data, src.step);
+    cv::Mat dstMat(dst.rows, dst.cols, matType, dst.data, dst.step);
 
-    cv::Mat dstMat(dst.rows, dst.cols, matType, dst.data);
-    dstMat.step = dst.step;
-
-    cv::Point2f center(src.cols * 0.5, src.rows * 0.5);
+    cv::Point2f center((src.cols - 1) * 0.5, (src.rows - 1) * 0.5);
     cv::Mat rotMat = cv::getRotationMatrix2D(center, rotationDegree, 1.0);
 
     rotMat.at<double>(0, 2) += (dst.cols - src.cols) * 0.5;
@@ -36,10 +33,7 @@ DLLAPI void RotateImage(BitmapImageData src, BitmapImageData dst, double rotatio
 
     cv::warpAffine(
         srcMat, dstMat, rotMat, 
-        cv::Size(dst.cols, dst.rows),
-        cv::INTER_LINEAR,
-        cv::BORDER_TRANSPARENT,
-        cv::Scalar(0, 0, 0));
+        cv::Size(dst.cols, dst.rows));
 
     return;
 }

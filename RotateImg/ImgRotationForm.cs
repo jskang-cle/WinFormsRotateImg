@@ -41,6 +41,7 @@ namespace RotateImg
                 return;
             }
 
+            _originalImage?.Dispose();
             _originalImage = newImage;
 
             pictureBoxOriginal.Image = newImage;
@@ -66,6 +67,7 @@ namespace RotateImg
                 return;
             }
 
+            _rotatedImage?.Dispose();
             _rotatedImage = ImageRotator.RotateImage(_originalImage, rotationDegree);
             pictureBoxRotated.Image = _rotatedImage;
         }
